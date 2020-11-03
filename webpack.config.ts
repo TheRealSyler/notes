@@ -1,5 +1,7 @@
 import { resolve } from 'path';
-import { Configuration, DefinePlugin } from 'webpack';
+import { Configuration, DefinePlugin, HotModuleReplacementPlugin } from 'webpack';
+// @ts-ignore
+import PreactRefreshPlugin from '@prefresh/webpack';
 import merge from 'webpack-merge';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
@@ -94,6 +96,7 @@ const renderer = merge.smart(base, {
           plugins: [
             ['@babel/plugin-proposal-class-properties', { loose: true }],
             '@babel/proposal-object-rest-spread',
+            '@prefresh/babel-plugin',
             [
               '@babel/plugin-transform-react-jsx',
               {
@@ -145,11 +148,25 @@ const renderer = merge.smart(base, {
     new ForkTsCheckerWebpackPlugin({
       reportFiles: ['src/renderer/**/*']
     }),
+    new HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({ template: `${__dirname}/public/index.html` }),
+    new PreactRefreshPlugin(),
     new DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
     })
-  ]
+  ],
+  devServer: {
+    port: 2003,
+    compress: true,
+    noInfo: true,
+    stats: 'errors-only',
+    inline: true,
+    hot: true,
+    headers: { 'Access-Control-Allow-Origin': '*' },
+    historyApiFallback: {
+      verbose: true
+    }
+  }
 });
 
 module.exports = [main, renderer];
