@@ -2,15 +2,30 @@ body
   margin: 0
   padding: 0
 *
-  color: #eee
+  color: var(--text)
   font-family: sans-serif
 
 html
   background: #111216
+  --text-faint: #aaa
+  --text: #eee
+  --text-error: #f45
+  $btn-bg: #36383a
+  --btn-bg-darker: #{darken($btn-bg, 10)}
+  --btn-bg-dark: #{darken($btn-bg, 6)}
+  --btn-bg: #{$btn-bg}
+  --btn-bg-light: #{lighten($btn-bg, 6)}
+  --btn-bg-lighten: #{lighten($btn-bg, 10)}
+  $btn-active: #07e
+  --btn-active-bg-darker: #{darken($btn-active, 10)}
+  --btn-active-bg-dark: #{darken($btn-active, 6)}
+  --btn-active-bg: #{$btn-active}
+  --btn-active-bg-light: #{lighten($btn-active, 6)}
+  --btn-active-bg-lighter: #{lighten($btn-active, 10)}
 
 textarea
   padding: 2rem
-  color: #eee
+  color: var(--text)
   border: none
   background: #212327
 
@@ -37,21 +52,32 @@ input
   cursor: pointer
   position: relative
 
-$btn_color: #36383a
-
 .btn,
 .inp
+
   font-size: 1.2rem
-  background: $btn_color
-  color: #eee
+  background: var(--btn-bg)
+  color: var(--text)
   &:hover
-    background: lighten($btn_color, 6)
+    background: var(--btn-bg-light)
   &:active
-    background: lighten($btn_color, 10)
+    background: var(--btn-bg-lighter)
 
   &:disabled
-    background: darken($btn_color, 8)
-    color: #888
+    cursor: default
+    background: var(--btn-bg-dark)
+    color: var(--text-faint)
+    &:hover
+      background: var(--btn-bg-dark)
+      color: var(--text-faint)
+
+  &-active
+    background: var(--btn-active-bg)
+
+    &:hover
+      background: var(--btn-active-bg-light)
+    &:active
+      background: var(--btn-active-bg-lighter)
 
 input[type=time]
   font-weight: bold
@@ -64,8 +90,3 @@ input[type=time]::-webkit-datetime-edit-ampm-field
 input[type=time]::-webkit-clear-button,
 input[type=time]::-webkit-inner-spin-button,
   display: none
-
-.disabled
-  color: #555
-  &-line
-    background: #555
