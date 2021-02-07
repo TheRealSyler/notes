@@ -47,6 +47,10 @@ export const SelectDirectory: FunctionComponent = () => {
           class="btn btn-active select-directory-button"
           disabled={isOkBtnDisabled}
           onClick={() => {
+            console.log(
+              '%cnot implemented',
+              'color: #000; font-weight: bold; background: #0af; border-radius: 5px; padding: 20px; font-size: 2rem'
+            );
             store.set('path', path!); // this button is disabled when the path is null
           }}
         >
